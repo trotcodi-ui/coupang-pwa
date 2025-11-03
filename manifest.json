@@ -7,7 +7,7 @@
   "theme_color": "#007aff",
   "icons": [
     {
-      "src": "icon-512.png",
+      "src": "https://raw.githubusercontent.com/trotcodi-ui/coupang-pwa/main/ittemmallicon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
