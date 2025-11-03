@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>쿠팡링크 홈화면 추가</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#007aff">
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      text-align: center;
+      margin: 50px;
+      background: #f9f9f9;
+    }
+    h1 { color: #333; }
+    button {
+      background-color: #007aff;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    p { color: #555; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <h1>📱 쿠팡링크 홈화면 추가</h1>
+  <p>쿠팡링크입니다.<br>홈 화면에 바로가기를 추가하세요!</p>
+  <button id="installButton">홈화면에 추가하기</button>
+
+  <script>
+    let deferredPrompt;
+    const installButton = document.getElementById('installButton');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installButton.style.display = 'inline-block';
+    });
+
+    installButton.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          alert('✅ 홈화면에 쿠팡링크가 추가되었습니다!');
+        } else {
+          alert('❌ 홈화면 추가가 취소되었습니다.');
+        }
+        deferredPrompt = null;
+      } else {
+        alert('⚠️ 이 브라우저에서는 홈화면 추가를 지원하지 않습니다.');
+      }
+    });
+  </script>
+</body>
+</html>
