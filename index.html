@@ -12,8 +12,10 @@
       text-align: center;
       margin: 50px;
       background: #f9f9f9;
+      color: #333;
     }
-    h1 { color: #333; }
+    h1 { font-size: 24px; margin-bottom: 20px; }
+    p { line-height: 1.6; }
     button {
       background-color: #007aff;
       color: #fff;
@@ -24,13 +26,25 @@
       cursor: pointer;
       margin-top: 20px;
     }
-    p { color: #555; line-height: 1.6; }
+    .ios-guide { display: none; }
+    /* iPhone Safari 전용 감지 */
+    @supports (-webkit-touch-callout: none) {
+      .ios-guide { display: block; }
+      #installButton { display: none; }
+    }
   </style>
 </head>
 <body>
   <h1>📱 쿠팡링크 홈화면 추가</h1>
-  <p>쿠팡링크입니다.<br>홈 화면에 바로가기를 추가하세요!</p>
+  <p>쿠팡링크를 사용하시려면<br>홈 화면에 바로가기를 추가하세요!</p>
+
   <button id="installButton">홈화면에 추가하기</button>
+
+  <div class="ios-guide">
+    <p>📲 iPhone 사용자는<br>
+    Safari 하단의 <strong>공유 아이콘(⬆️)</strong>을 누르고<br>
+    <strong>“홈 화면에 추가”</strong>를 선택해주세요.</p>
+  </div>
 
   <script>
     let deferredPrompt;
@@ -53,7 +67,7 @@
         }
         deferredPrompt = null;
       } else {
-        alert('⚠️ 이 브라우저에서는 홈화면 추가를 지원하지 않습니다.');
+        alert('⚠️ iPhone에서는 Safari의 공유 메뉴에서 직접 추가해주세요.');
       }
     });
   </script>
