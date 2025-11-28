@@ -1,143 +1,110 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>쿠팡 바로가기</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>홈 화면 추가 안내</title>
 
-  <!-- ✅ PWA 필수 파일 -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#007aff">
-  <link rel="apple-touch-icon" href="ittemmallicon.png">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Apple SD Gothic Neo", sans-serif;
+        }
 
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCN37ECJD4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.55);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
 
-  gtag('config', 'G-GCN37ECJD4');
-</script>
+        .popup-box {
+            background: #fff;
+            width: 90%;
+            max-width: 380px;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s ease;
+        }
 
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background: #f8f9fb;
-      color: #333;
-      margin: 0;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    h1 {
-      color: #007aff;
-      font-size: 22px;
-      margin-bottom: 15px;
-    }
-    button {
-      background: #007aff;
-      color: #fff;
-      border: none;
-      padding: 15px 25px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #005fcc;
-    }
-    .notice {
-      margin-top: 20px;
-      color: #333;
-      font-size: 15px;
-      line-height: 1.6;
-    }
-    .sub-guide {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #666;
-      background: #eef2f6;
-      border-radius: 8px;
-      padding: 15px;
-      display: inline-block;
-      text-align: left;
-    }
-  </style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .popup-box h2 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        .highlight {
+            background: #f5f7ff;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px 0 15px;
+            line-height: 1.5em;
+            font-size: 15px;
+        }
+
+        .add-btn {
+            background: #007aff;
+            color: #fff;
+            border: none;
+            padding: 13px 18px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        .close-btn {
+            background: #e5e5e5;
+            color: #333;
+            border: none;
+            padding: 12px 18px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 15px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <h1>쿠팡 바로가기 설치</h1>
-  <p>홈 화면에 쿠팡 바로가기를 추가해보세요!</p>
-  <button id="installBtn">홈 화면에 추가</button>
-  <div id="notice" class="notice"></div>
-  <div id="subGuide" class="sub-guide"></div>
 
-  <script>
-    const ua = navigator.userAgent.toLowerCase();
-    const isIOS = /iphone|ipad|ipod/.test(ua);
-    const isAndroid = /android/.test(ua);
-    let deferredPrompt = null;
+<div class="popup-overlay" id="popupModal">
+    <div class="popup-box">
+        <h2>📌 홈 화면에 추가하시겠어요?</h2>
 
-    const notice = document.getElementById('notice');
-    const installBtn = document.getElementById('installBtn');
-    const subGuide = document.getElementById('subGuide');
+        <div class="highlight">
+            📱 <b>핸드폰 홈화면에 아이콘을 만들면</b><br>
+            👉 <b>쿠팡 앱이 자동으로 열려요!</b><br>
+            자주 이용하실수록 더 편해요 😊
+        </div>
 
-    // ✅ 기기별 안내 문구 설정
-    if (isIOS) {
-      notice.innerHTML = "🍎 아이폰(iOS)에서는 아래 방법으로 홈화면에 추가할 수 있습니다.";
-      subGuide.innerHTML = `
-        <strong>사파리(Safari)</strong>에서 열었을 경우:<br>
-        1️⃣ 하단 중앙의 <strong>공유 버튼(⬆️)</strong>을 누르고<br>
-        2️⃣ 아래로 스크롤 후 <strong>홈 화면에 추가</strong>를 선택하세요.<br><br>
-        <strong>크롬(Chrome)</strong>으로 열었을 경우:<br>
-        1️⃣ 상단 오른쪽의 <strong>공유 버튼(⋮)</strong>을 클릭하고<br>
-        2️⃣ 스크롤을 내려 <strong>홈 화면에 추가</strong>를 선택하세요.
-      `;
-    } else if (isAndroid) {
-      notice.innerHTML = "📱 갤럭시(안드로이드) 기기에서는 아래 버튼을 눌러 바로 홈화면에 설치할 수 있습니다.";
-      subGuide.innerHTML = `
-        설치가 안 보인다면:<br>
-        1️⃣ 상단 오른쪽의 <strong>점 3개(⋮)</strong> 메뉴 클릭<br>
-        2️⃣ <strong>홈 화면에 추가</strong>를 선택하세요.
-      `;
-    } else {
-      notice.innerHTML = "💻 데스크톱 환경에서는 홈화면 추가 기능을 사용할 수 없습니다.";
+        <button class="add-btn" onclick="goToPwaPage()">홈 화면에 추가하는 방법 보기</button>
+        <button class="close-btn" onclick="closePopup()">나중에 하기</button>
+    </div>
+</div>
+
+<script>
+    function goToPwaPage() {
+        window.location.href = "https://trotcodi-ui.github.io/coupang-pwa/index.html";
     }
 
-    // ✅ 안드로이드 PWA 설치 이벤트 준비
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-    });
-
-    installBtn.addEventListener('click', async () => {
-      if (isAndroid && deferredPrompt) {
-        deferredPrompt.prompt();
-        const choice = await deferredPrompt.userChoice;
-        if (choice.outcome === 'accepted') {
-          alert("✅ 홈화면에 쿠팡 바로가기가 추가되었습니다!");
-        }
-        deferredPrompt = null;
-      } else if (isIOS) {
-        alert("🍎 사파리 하단 공유버튼(⬆️) → 홈 화면에 추가를 눌러주세요.");
-      } else {
-        alert("⚠️ 홈화면 추가 기능을 사용할 수 없는 환경입니다.");
-      }
-    });
-
-    // ✅ 서비스워커 등록
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('서비스워커 등록 완료'))
-        .catch(err => console.log('서비스워커 등록 실패:', err));
+    function closePopup() {
+        document.getElementById("popupModal").style.display = "none";
     }
+</script>
 
-    // ✅ 설치된 PWA 아이콘에서 실행 시 자동 쿠팡 이동
-    window.addEventListener('load', () => {
-      if (window.matchMedia('(display-mode: standalone)').matches) {
-        window.location.href = "https://link.coupang.com/a/cL3QkL";
-      }
-    });
-  </script>
 </body>
 </html>
-
